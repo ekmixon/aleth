@@ -6,7 +6,7 @@
 
 # Build stage
 
-FROM alpine:latest AS builder
+FROM alpine:3.15 AS builder
 RUN apk add --no-cache \
         linux-headers \
         g++ \
@@ -22,7 +22,7 @@ RUN make -j $(nproc) && make install
 # This is not the last stage so build it as
 #     docker build --target testeth -f scripts/docker/aleth.dockerfile .
 
-FROM alpine:latest AS testeth
+FROM alpine:3.15 AS testeth
 RUN adduser -D testeth
 RUN apk add --no-cache libstdc++
 USER testeth
@@ -32,7 +32,7 @@ ENTRYPOINT ["/usr/bin/testeth"]
 
 # Target: aleth
 
-FROM alpine:latest AS aleth
+FROM alpine:3.15 AS aleth
 RUN apk add --no-cache python3 libstdc++
 RUN adduser -D aleth
 COPY --from=builder /usr/bin/aleth* /source/scripts/aleth.py /source/scripts/dopple.py /usr/bin/
