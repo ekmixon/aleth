@@ -11,12 +11,12 @@ for line in sys.stdin:
 
 	# read the header
 	if not clients:
-		clients = [word for word in line.rstrip().split(', ')]
+		clients = list(line.rstrip().split(', '))
 		units = clients.pop(0)
 		continue
 
 	# read the data
-	seconds = [second for second in line.rstrip().split(', ')]
+	seconds = list(line.rstrip().split(', '))
 	test = seconds.pop(0)
 	if test not in ['nop', 'pop', 'add64', 'add128', 'add256', 'sub64', 'sub128', 'sub256',
 	                'mul64', 'mul128', 'mul256', 'div64', 'div128', 'div256']:
@@ -34,7 +34,7 @@ sys.stdout.write("(ns/OP)")
 for client in clients:
 	if client == 'gas':
 		continue
-	sys.stdout.write(", " + client)
+	sys.stdout.write(f", {client}")
 sys.stdout.write("\n")
 
 # ns/op is run time scaled by number of operations and offset by estimated overhead

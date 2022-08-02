@@ -35,7 +35,7 @@ if mode == "gas_per_sec":
 elif mode == "avg_gas_per_sec":
     sum = 0
     avg_gps = []
-    for i in range(0, len(gas_per_second)):
+    for i in range(len(gas_per_second)):
         sum += gas_per_second[i]
         avg_gps.append(sum / (i + 1))
 
@@ -49,7 +49,7 @@ elif mode == "avg_gas_per_sec_1000blocks":
     for i in range(min(1000, len(gas_per_second))):
         sum1000 += gas_per_second[i]
         avg_gps.append(sum1000 / (i + 1))
-        
+
     for i in range(1000, len(gas_per_second)):
         sum1000 += gas_per_second[i] - gas_per_second[i - 1000]
         avg_gps.append(sum1000 / 1000)
@@ -62,8 +62,8 @@ elif mode == "sync_time":
     time = [r["total"] for r in perf_records]
 
     time_cum = time
-    for i in range(1, len(time)):
-      time_cum[i] += time_cum[i-1]
+    for i in range(1, len(time_cum)):
+        time_cum[i] += time_cum[i-1]
 
     time_cum_hours = [x / 3600 for x in time_cum]
 

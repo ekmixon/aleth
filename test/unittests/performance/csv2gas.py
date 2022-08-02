@@ -11,12 +11,12 @@ for line in sys.stdin:
 
 	# read the header
 	if not clients:
-		clients = [word for word in line.rstrip().split(', ')]
+		clients = list(line.rstrip().split(', '))
 		clients.pop(0)
 		continue
 
 	# read the data
-	seconds = [second for second in line.rstrip().split(', ')]
+	seconds = list(line.rstrip().split(', '))
 	test = seconds.pop(0)
 	if test not in tests:
 		tests += [test]
@@ -30,7 +30,7 @@ sys.stdout.write("(ns/gas)")
 for client in clients:
 	if client == 'gas':
 		continue
-	sys.stdout.write(", " + client)
+	sys.stdout.write(f", {client}")
 sys.stdout.write("\n")
 
 # nanos = ns/gas is run time scaled by amount of gas

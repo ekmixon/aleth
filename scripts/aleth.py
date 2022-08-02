@@ -19,7 +19,7 @@ wrapper_args, aleth_args = parser.parse_known_args()
 aleth_exec = wrapper_args.aleth_exec
 
 if not os.path.isfile(aleth_exec):
-    print("Wrong path to aleth executable: {}".format(aleth_exec), file=sys.stderr)
+    print(f"Wrong path to aleth executable: {aleth_exec}", file=sys.stderr)
     parser.print_usage(sys.stderr)
     exit(1)
 

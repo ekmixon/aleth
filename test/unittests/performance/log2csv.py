@@ -15,25 +15,22 @@ tests = []
 gas = {}
 data = {}
 for line in sys.stdin:
-	match = re.search(test_line, line)
-	if match:
-		path = match.group(1)
-		client = match.group(2)
-		test = match.group(3)
+	if match := re.search(test_line, line):
+		path = match[1]
+		client = match[2]
+		test = match[3]
 		if client not in clients:
 			clients += [client]
 		if test not in tests:
 			tests += [test]
 		continue
-	match = re.search(gas_line, line)
-	if match:
-		gas[test] = match.group(1)
+	if match := re.search(gas_line, line):
+		gas[test] = match[1]
 		continue
-	match = re.search(secs_line, line)
-	if match:
+	if match := re.search(secs_line, line):
 		if test not in data:
 			data[test] = {}
-		data[test][client] = match.group(1)
+		data[test][client] = match[1]
 		continue
 
 # print the header
@@ -41,14 +38,14 @@ sys.stdout.write("(sec/run)")
 if len(gas):
 	sys.stdout.write(", gas")
 for client in clients:
-	sys.stdout.write(", %s" % client)
+	sys.stdout.write(f", {client}")
 sys.stdout.write("\n")
 
 # print the test, gas, secs, secs, ...
 for test in tests:
-	sys.stdout.write("%s" % test)
+	sys.stdout.write(f"{test}")
 	if gas[test]:
-		sys.stdout.write(", %s" % gas[test])
+		sys.stdout.write(f", {gas[test]}")
 	for client in clients:
-		sys.stdout.write(", %s" % data[test][client])
+		sys.stdout.write(f", {data[test][client]}")
 	sys.stdout.write("\n")

@@ -11,12 +11,12 @@ for line in sys.stdin:
 
 	# read the header
 	if not clients:
-		clients = [word for word in line.rstrip().split(', ')]
+		clients = list(line.rstrip().split(', '))
 		units = clients.pop(0)
 		continue
 
 	# read the data
-	seconds = [second for second in line.rstrip().split(', ')]
+	seconds = list(line.rstrip().split(', '))
 	test = seconds.pop(0)
 	if test not in tests:
 		tests += [test]
@@ -29,7 +29,7 @@ for line in sys.stdin:
 # print extended header
 sys.stdout.write("(ns/test)")
 for client in clients:
-	sys.stdout.write(", " + client)
+	sys.stdout.write(f", {client}")
 sys.stdout.write("\n")
 
 # ns/test is run time scaled by number of operations
